@@ -39,7 +39,7 @@ The project is currently undergoing a **Technical Stack Evaluation** to ensure m
 ---
 
 ## ⚖️ Intellectual Property & Proprietary Rights
-**Copyright © 2026 [Your Name]. All Rights Reserved.**
+**Copyright © 2026 Ashley Windsor. All Rights Reserved.**
 
 "The Master's Loom," its associated brand identity, system architecture, data schemas, and user experience frameworks are the exclusive intellectual property of the author. 
 

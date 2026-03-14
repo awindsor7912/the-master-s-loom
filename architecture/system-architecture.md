@@ -1,13 +1,32 @@
-# System Architecture
+# System Architecture & Data Logic
 
-## Real-Time Data Flow
-The Master's Loom relies on a "Push-Sync" architecture to ensure zero-latency updates during live combat.
+## 📡 Real-Time State Synchronization
+To achieve the "Command Center" feel, The Master's Loom utilizes a **Real-Time Subscription Model**. 
 
-1. **User Action:** A Player updates their current HP on their mobile Power App.
-2. **Data Trigger:** The change is committed to the **Dataverse Character Table**.
-3. **DM Update:** The DM’s Dashboard utilizes a "Refresh-on-Change" property, instantly reflecting the new HP value without a manual page reload.
+* **The Logic:** Instead of the DM "polling" for updates, the Player's client "pushes" changes to a central cloud state. Any change to a Character's health or position triggers an instant update to the DM's view via a persistent data connection (WebSockets or Real-time DB listeners).
 
-## AI Integration Layer
-* **Transcription:** Audio is captured via the Power Apps microphone control and sent to an AI logic flow for text conversion.
-* **Summarization:** At session close, the "Chronicle Engine" parses the transcript and DM notes to generate a narrative summary stored in the **Session History** table.
-* **Vision:** AI prompts generate tactical maps based on DM descriptions (e.g., "A damp cavern with a glowing pool in the center").
+## 🧠 AI Integration Pipeline
+The "Chronicle Engine" follows a three-stage logic flow:
+1. **Capture:** Raw audio or text notes are streamed to a processing buffer.
+2. **Contextualization:** The AI compares the session data against the existing **World Lore** and **NPC** tables to ensure accuracy.
+3. **Synthesis:** A narrative summary is generated and committed to the **Session History** table.
+
+---
+
+## 📊 Core Data Schema (Conceptual)
+
+| Entity | Primary Keys & Relationships | Key Attributes |
+| :--- | :--- | :--- |
+| **Campaign** | `Campaign_ID` (PK) | Ruleset, World Lore, Active DM |
+| **Participant** | `User_ID` (PK), `Campaign_ID` (FK) | Role (DM/Player), Permissions |
+| **Character** | `Char_ID` (PK), `User_ID` (FK) | Current_HP, AC, Stat_Block (JSON), Inventory |
+| **Session** | `Sess_ID` (PK), `Campaign_ID` (FK) | Date, Transcript, AI_Summary, Active_Map |
+| **Interaction** | `Msg_ID` (PK), `Sess_ID` (FK) | Sender_ID, Receiver_ID, Content, Timestamp |
+
+---
+
+## 🗺️ Interactive Map Logic
+Maps are treated as "Dynamic Canvas" objects. 
+* **Layer 1:** The Background (AI-generated or uploaded JPG).
+* **Layer 2:** The Grid (Calculated based on map scale).
+* **Layer 3:** The Figurines (Coordinate-based icons linked to the `Character` table).

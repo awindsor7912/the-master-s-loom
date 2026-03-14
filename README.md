@@ -36,7 +36,17 @@ The project is currently undergoing a **Technical Stack Evaluation** to ensure m
 ---
 *Note: This repository currently contains the System Design, Data Schema, and Technical Requirements. Implementation is forthcoming.*
 
-## ⚖️ Legal
-© 2026 Ashley Windsor. All conceptual rights reserved. 
-The "The Master's Loom" name, brand identity, and specific architectural 
-frameworks are the intellectual property of the author.
+---
+
+## ⚖️ Intellectual Property & Proprietary Rights
+**Copyright © 2026 [Your Name]. All Rights Reserved.**
+
+"The Master's Loom," its associated brand identity, system architecture, data schemas, and user experience frameworks are the exclusive intellectual property of the author. 
+
+**Public Disclosure Notice:**
+This repository serves as a public design journal and architectural portfolio. The presence of this documentation in a public forum does **not** constitute a license for:
+* Reproduction or distribution of these architectural frameworks.
+* The commercial or private development of software based on these specific schemas.
+* The use of "The Master's Loom" branding or trade dress.
+
+For inquiries regarding collaboration or professional discussion, please contact the author via LinkedIn.

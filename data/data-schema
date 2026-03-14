@@ -2,13 +2,13 @@
 
 ## Core Tables
 
-### 1. Campaigns
+### 1 Campaigns
 * **CampaignID (Primary Key)**
 * **DM_UserID**
 * **Ruleset_Type** (e.g., D&D 5e, Pathfinder)
 * **World_Lore_Blob** (Stored as Markdown)
 
-### 2. Characters
+### 2 Characters
 * **CharacterID (Primary Key)**
 * **CampaignID (Foreign Key)**
 * **Player_UserID**
@@ -16,7 +16,7 @@
 * **Armor_Class**
 * **Stat_Block** (JSON Object)
 
-### 3. Sessions
+### 3 Sessions
 * **SessionID (Primary Key)**
 * **CampaignID (Foreign Key)**
 * **Session_Date**
@@ -24,7 +24,7 @@
 * **AI_Summary**
 * **Active_Map_URL**
 
-### 4. Communications (Whispers)
+### 4 Communications (Whispers)
 * **MessageID (Primary Key)**
 * **SessionID (Foreign Key)**
 * **SenderID / ReceiverID**

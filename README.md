@@ -46,6 +46,14 @@ The original target stack was **FlutterFlow + Firebase**, later expanded to cons
 2. **Platform Agnostic:** A single-codebase approach ensuring a seamless experience across Web, iOS, and Android.
 3. **AI-Native Logic:** Integrated pipelines for narrative assistance, world-building, and session summarization.
 
+## Planned Features
+
+- Campaign management
+- Character tracking
+- Session notes
+- World-building elements
+- Inventory and item tracking
+
 ## ⚖️ Intellectual Property & Proprietary Rights
 **Copyright © 2026 Ashley Windsor. All Rights Reserved.**
 

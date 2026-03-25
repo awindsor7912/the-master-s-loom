@@ -1,31 +1,31 @@
 # Data Schema & Relationships
 
-## Core Tables
+## Prototype V1 Tables
+### Campaigns
+- CampaignID
+- CampaignName
+- DMName
+- RulesetType
+- WorldNotes
 
-### 1 Campaigns
-* **CampaignID (Primary Key)**
-* **DM_UserID**
-* **Ruleset_Type** (e.g., D&D 5e, Pathfinder)
-* **World_Lore_Blob** (Stored as Markdown)
+### Characters
+- CharacterID
+- CampaignID
+- CharacterName
+- PlayerName
+- HP
+- MaxHP
+- ArmorClass
+- Notes
 
-### 2 Characters
-* **CharacterID (Primary Key)**
-* **CampaignID (Foreign Key)**
-* **Player_UserID**
-* **Current_HP / Max_HP**
-* **Armor_Class**
-* **Stat_Block** (JSON Object)
+### Sessions
+- SessionID
+- CampaignID
+- SessionDate
+- SessionNotes
+- Summary
 
-### 3 Sessions
-* **SessionID (Primary Key)**
-* **CampaignID (Foreign Key)**
-* **Session_Date**
-* **Raw_Transcript**
-* **AI_Summary**
-* **Active_Map_URL**
-
-### 4 Communications (Whispers)
-* **MessageID (Primary Key)**
-* **SessionID (Foreign Key)**
-* **SenderID / ReceiverID**
-* **Message_Content**
+## Future-State Tables
+### Communications
+### Battlemap Actors
+### AI Chronicle Pipeline

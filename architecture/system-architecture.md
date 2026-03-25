@@ -1,5 +1,8 @@
 # System Architecture & AI Integration
 
+> Note: This document describes the long-term target architecture for The Master's Loom.
+> The current prototype phase is being developed in MIT App Inventor and will implement a simplified subset of these concepts.
+
 ## 📡 Real-Time State Synchronization
 To achieve a reactive "Command Center" experience, the system utilizes a **Real-Time Subscription Model**:
 * **Push-Sync Logic:** Instead of traditional polling, player clients "push" changes to a central cloud state. 

@@ -1,7 +1,7 @@
 ![The Master's Loom Banner](loom-banner.png)
 
 # The Master's Loom
-**A Real-Time, AI-Augmented TTRPG Command Center and Campaign Engine.**
+**An experimental TTRPG campaign management system, evolving toward a real-time AI-augmented platform.**
 
 ## 🌌 The Vision
 The Master's Loom is a "Single Source of Truth" platform designed to bridge the gap between high-fantasy storytelling and real-time data management. By eliminating paper silos and manual tracking, the system allows Dungeon Masters and Players to maintain narrative immersion while the "Game State" is synchronized in the background.

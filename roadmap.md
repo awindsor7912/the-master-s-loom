@@ -1,3 +1,7 @@
+---
+title: Roadmap
+description: Development phases and evolution plan for The Master's Loom.
+---
 # Roadmap
 
 ## Phase 1: MIT App Inventor Prototype

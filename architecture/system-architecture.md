@@ -1,5 +1,15 @@
 # System Architecture
 
+<div class="lore-card">
+  <h3>Architect's Note</h3>
+  <p>
+    The current architecture is deliberately simple and local-first. Its purpose is to validate how the system should behave before committing to infrastructure decisions.
+  </p>
+  <p>
+    Future architecture builds upon these validated patterns, introducing synchronization, modularity, and AI-assisted systems.
+  </p>
+</div>
+
 > Note: This document describes both the current prototype architecture and the long-term target architecture for The Master's Loom.  
 > The current build is being developed in MIT App Inventor and uses a simplified local-first design.  
 > Future phases may rebuild these validated concepts in FlutterFlow with a cloud backend such as Supabase or Firebase.

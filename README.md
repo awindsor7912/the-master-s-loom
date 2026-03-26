@@ -3,6 +3,16 @@
 # The Master's Loom
 **An experimental TTRPG campaign management system, evolving toward a real-time AI-augmented platform.**
 
+<div class="lore-card">
+  <h3>What Is The Master's Loom?</h3>
+  <p>
+    The Master's Loom is not just an application — it is an evolving system designed to support storytelling, worldbuilding, and real-time campaign orchestration for tabletop RPGs.
+  </p>
+  <p>
+    This project serves as both a functional prototype and a structured learning journey into modern application design.
+  </p>
+</div>
+
 ## 🌌 The Vision
 The Master's Loom is a "Single Source of Truth" platform designed to bridge the gap between high-fantasy storytelling and real-time data management. By eliminating paper silos and manual tracking, the system allows Dungeon Masters and Players to maintain narrative immersion while the "Game State" is synchronized in the background.
 

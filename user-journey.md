@@ -4,6 +4,16 @@ description: Intended user experience for The Master's Loom.
 ---
 # User Journey: A Night at The Master's Loom
 
+<div class="lore-card">
+  <h3>Player Experience Focus</h3>
+  <p>
+    The system is designed to reduce friction during gameplay by surfacing the right information at the right time.
+  </p>
+  <p>
+    Every interaction should feel intuitive, fast, and supportive of storytelling rather than disruptive to it.
+  </p>
+</div>
+
 This document outlines the end-to-end experience for both the Dungeon Master (DM) and the Players, highlighting how the platform facilitates seamless gameplay and narrative transition.
 
 ---

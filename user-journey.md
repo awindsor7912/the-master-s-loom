@@ -1,9 +1,7 @@
 ---
-title: User Journey
+title: User Journey: A Night at The Master's Loom
 description: Intended user experience for The Master's Loom.
 ---
-# User Journey: A Night at The Master's Loom
-
 <div class="lore-card">
   <h3>Player Experience Focus</h3>
   <p>

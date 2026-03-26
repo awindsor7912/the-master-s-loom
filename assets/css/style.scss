@@ -282,3 +282,16 @@ body {
     padding: 1.2rem;
   }
 }
+.lore-card {
+  margin: 1.25rem 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(201, 169, 106, 0.06), rgba(126, 47, 59, 0.06));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+.lore-card h3 {
+  margin-top: 0;
+  color: var(--gold-strong);
+}

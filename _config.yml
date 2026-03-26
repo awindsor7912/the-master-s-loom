@@ -1,1 +1,39 @@
-theme: jekyll-theme-slate
+title: "The Master's Loom"
+description: "A dark-fantasy design journal for an evolving TTRPG campaign management system."
+baseurl: "/the-master-s-loom"
+url: "https://awindsor7912.github.io"
+
+markdown: kramdown
+theme: minima
+
+plugins:
+  - jekyll-seo-tag
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+navigation:
+  - title: Home
+    url: /
+  - title: Roadmap
+    url: /roadmap
+  - title: User Journey
+    url: /user-journey
+  - title: Architecture
+    url: /architecture/system-architecture
+  - title: Data Schema
+    url: /data/data-schema
+  - title: Prototype
+    url: /prototype/README
+
+branding:
+  accent: "#c9a96a"
+  accent_dark: "#8a6a2f"
+  bg: "#0f0f14"
+  panel: "#171922"
+  panel_alt: "#1f2230"
+  text: "#ece7d5"
+  muted: "#b8b19c"

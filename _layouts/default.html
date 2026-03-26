@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+      {% if page.title %}
+        {{ page.title }} | {{ site.title }}
+      {% else %}
+        {{ site.title }}
+      {% endif %}
+    </title>
+
+    <meta name="description" content="{{ page.description | default: site.description | escape }}">
+
+    {% seo %}
+
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <div class="header-overlay"></div>
+        <div class="header-inner">
+          <p class="eyebrow">Design Journal • TTRPG Systems • Fantasy UI</p>
+          <h1 class="site-title">
+            <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
+          </h1>
+          <p class="site-tagline">{{ site.description }}</p>
+
+          <nav class="site-nav" aria-label="Primary">
+            {% for item in site.navigation %}
+              <a href="{{ item.url | relative_url }}"
+                 class="nav-link {% if page.url == item.url %}active{% endif %}">
+                {{ item.title }}
+              </a>
+            {% endfor %}
+          </nav>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <aside class="sidebar-card">
+          <h2>Campaign Brief</h2>
+          <p>
+            The Master's Loom is a fantasy-flavored system design journal tracking
+            the evolution of a tabletop RPG campaign management platform from prototype
+            to advanced architecture.
+          </p>
+
+          <div class="sidebar-divider"></div>
+
+          <ul class="sidebar-list">
+            <li><strong>Current Phase:</strong> MIT App Inventor prototype</li>
+            <li><strong>Focus:</strong> data model, workflows, and UX validation</li>
+            <li><strong>Future:</strong> FlutterFlow + Supabase/Firebase</li>
+          </ul>
+        </aside>
+
+        <article class="content-card markdown-body">
+          {% if page.title and page.url != "/" %}
+            <header class="page-title-block">
+              <p class="page-kicker">The Master's Loom Archive</p>
+              <h1>{{ page.title }}</h1>
+              {% if page.description %}
+                <p class="page-description">{{ page.description }}</p>
+              {% endif %}
+            </header>
+          {% endif %}
+
+          {{ content }}
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 Ashley Windsor • The Master's Loom</p>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -295,3 +295,15 @@ body {
   margin-top: 0;
   color: var(--gold-strong);
 }
+.lore-card {
+  position: relative;
+}
+
+.lore-card::before {
+  content: "✦";
+  position: absolute;
+  top: -10px;
+  left: 12px;
+  font-size: 1.2rem;
+  color: var(--gold);
+}

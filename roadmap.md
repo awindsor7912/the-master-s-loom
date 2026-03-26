@@ -2,7 +2,15 @@
 title: Roadmap
 description: Development phases and evolution plan for The Master's Loom.
 ---
-# Roadmap
+
+## Development Roadmap
+
+<div class="lore-card">
+  <h3>Design Intent</h3>
+  <p>
+    This phase exists to validate structure before investing in scalable tooling.
+  </p>
+</div>
 
 ## Phase 1: MIT App Inventor Prototype
 - [ ] Define MVP feature set

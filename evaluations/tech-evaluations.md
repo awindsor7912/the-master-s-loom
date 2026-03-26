@@ -1,5 +1,15 @@
 # Technical Stack Evaluation
 
+<div class="lore-card">
+  <h3>Evaluation Approach</h3>
+  <p>
+    Technology decisions are made based on learning value, flexibility, and long-term scalability rather than short-term convenience.
+  </p>
+  <p>
+    Each tool is evaluated in context of how it supports the system's evolution.
+  </p>
+</div>
+
 ## 🎯 Selection Criteria
 To support a public-facing, scalable gaming utility, the stack was evaluated against four core pillars:
 1. **Real-Time Latency:** Must support <100ms sync.

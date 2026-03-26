@@ -1,5 +1,15 @@
 # Data Schema & Relationships
 
+<div class="lore-card">
+  <h3>Data Philosophy</h3>
+  <p>
+    The data model is designed to remain simple during early development, focusing on clarity and usability rather than full normalization.
+  </p>
+  <p>
+    Complexity will be introduced gradually as the system evolves and real-world usage patterns emerge.
+  </p>
+</div>
+
 > Note: This schema is split between the current prototype model and the future-state model.  
 > The prototype schema is intentionally simplified for MIT App Inventor development.  
 > Future versions may normalize these entities further when rebuilt on a cloud backend.

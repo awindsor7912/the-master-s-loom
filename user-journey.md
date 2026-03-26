@@ -1,3 +1,7 @@
+---
+title: User Journey
+description: Intended user experience for The Master's Loom.
+---
 # User Journey: A Night at The Master's Loom
 
 This document outlines the end-to-end experience for both the Dungeon Master (DM) and the Players, highlighting how the platform facilitates seamless gameplay and narrative transition.

@@ -1,3 +1,8 @@
+---
+title: "System Architecture"
+description: "Platform modules, synchronization model, and security boundaries."
+---
+
 # System Architecture
 
 > **Status:** proposed target architecture; implementation not yet represented in this public documentation repository. The historical MIT App Inventor/FlutterFlow approach has been superseded by a web-first direction as of November 2026.

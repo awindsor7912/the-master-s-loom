@@ -1,3 +1,8 @@
+---
+title: "Data Schema"
+description: "Campaign records and versioned ruleset schema."
+---
+
 # Data Schema & Ruleset Boundaries
 
 > **Status:** conceptual PostgreSQL schema for a proposed Supabase-backed web prototype. Tables below are **not** implemented migrations. Earlier App Inventor field lists were learning artifacts and are superseded by this design.

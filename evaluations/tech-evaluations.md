@@ -1,3 +1,8 @@
+---
+title: "Technology Decisions"
+description: "Technology comparisons and November 2026 web-first decision."
+---
+
 # Technology Evaluation & Decision Record
 
 ## Decision — November 9, 2026

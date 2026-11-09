@@ -1,3 +1,8 @@
+---
+title: "Known Limitations"
+description: "Current scope constraints and deferred capabilities."
+---
+
 # Known Limitations and Open Risks
 
 > These describe the **planned** web prototype. No live browser application, deployed database, or test results are included in this public documentation repository.

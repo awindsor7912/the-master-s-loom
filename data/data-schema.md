@@ -1,198 +1,103 @@
-# Data Schema & Relationships
+# Data Schema & Ruleset Boundaries
 
-<div class="lore-card">
-  <h3>Data Philosophy</h3>
-  <p>
-    The data model is designed to remain simple during early development, focusing on clarity and usability rather than full normalization.
-  </p>
-  <p>
-    Complexity will be introduced gradually as the system evolves and real-world usage patterns emerge.
-  </p>
-</div>
+> **Status:** conceptual PostgreSQL schema for a proposed Supabase-backed web prototype. Tables below are **not** implemented migrations. Earlier App Inventor field lists were learning artifacts and are superseded by this design.
 
-> Note: This schema is split between the current prototype model and the future-state model.  
-> The prototype schema is intentionally simplified for MIT App Inventor development.  
-> Future versions may normalize these entities further when rebuilt on a cloud backend.
+## 1. Modeling principles
 
----
+- Use UUID primary keys and explicit foreign keys for shared entities.
+- Associate tenant-scoped records with a campaign (directly or via a verified relationship).
+- Distinguish a person's authenticated account from their membership in an individual campaign and from characters they control.
+- Pin campaigns to a specific ruleset **version**; other RPGs are future modules.
+- Keep durable state relational where integrity and queries matter; use validated `jsonb` for variable game-system data.
+- Store key state transitions in append-only `session_events`; do not use event history as an excuse to skip authoritative current-state tables.
+- Use `timestamptz` for timestamps, enforce constraints, and enable RLS. Sensitive message/event visibility must be enforced by trusted authorization rules.
 
-## 1. Schema Overview
+## 2. Core entities (proposed)
 
-The initial schema is centered around three core entities:
-
-- **Campaigns** – top-level containers for a game world or play group
-- **Characters** – player or game-controlled entities associated with a campaign
-- **Sessions** – records of individual play sessions associated with a campaign
-
-These three entities define the minimum viable structure needed to validate the app’s workflow.
-
----
-
-## 2. Prototype V1 Tables
-
-## Campaigns
-
-**Purpose:** Stores the top-level campaign record.
-
-| Field | Type | Description |
+| Entity | Important fields | Relationship and intent |
 |---|---|---|
-| CampaignID | String | Unique identifier for the campaign |
-| CampaignName | String | Name of the campaign |
-| DMName | String | Name of the Dungeon Master or primary organizer |
-| RulesetType | String | Ruleset or system used by the campaign |
-| WorldNotes | Text | General notes about the world, setting, or campaign context |
+| `rulesets` | `id`, `slug`, `display_name` | Registry of supported game systems |
+| `ruleset_versions` | `id`, `ruleset_id`, `version_key`, `schema_version`, `status` | One ruleset to many explicitly versioned implementations |
+| `profiles` | `user_id`, `display_name` | Auth user-linked profile; identity comes from Supabase Auth |
+| `campaigns` | `id`, `name`, `owner_user_id`, `ruleset_version_id`, `created_at` | Campaign belongs to a chosen ruleset version |
+| `campaign_memberships` | `campaign_id`, `user_id`, `role`, `status` | Campaign-scoped DM/player membership; unique `(campaign_id,user_id)` |
+| `characters` | `id`, `campaign_id`, `owner_user_id`, `name`, `character_type` | Character identity, ownership, and campaign association |
+| `character_ruleset_data` | `character_id`, `ruleset_version_id`, `schema_version`, `data jsonb` | Game-specific stats; validated against selected ruleset |
+| `sessions` | `id`, `campaign_id`, `status`, `started_at`, `ended_at` | A campaign's play sessions |
+| `encounters` | `id`, `session_id`, `status`, `round_number`, `active_turn_id` | Active or archived combat context |
+| `encounter_participants` | `id`, `encounter_id`, `character_id`, `initiative`, `turn_order` | Actors in an encounter; NPC support through character type or dedicated actor model |
+| `character_resources` | `id`, `character_id`, `resource_key`, `current_value`, `max_value`, `version` | HP and other counters with ruleset-specific semantics |
+| `maps` | `id`, `campaign_id`, `asset_path`, `grid_config jsonb`, `visibility` | Campaign map and its controlled asset |
+| `map_tokens` | `id`, `map_id`, `character_id`, `x`, `y`, `visibility`, `version` | Durable token identity and final position |
+| `session_events` | `id`, `session_id`, `actor_user_id`, `event_type`, `payload jsonb`, `visibility`, `created_at`, `operation_id` | Append-only activity stream, ordered per session where needed |
+| `session_notes` | `id`, `session_id`, `author_user_id`, `body`, `visibility` | Authored notes; visibility must be authorized |
 
-### Relationships
-- One campaign can have many characters
-- One campaign can have many sessions
+`character_resources` is a practical candidate for a common interface, but not every game system uses hit points. The generic core must not assume every ruleset has HP, armor class, or spell slots.
 
----
+## 3. D&D 2024-specific data
 
-## Characters
+Illustrative `character_ruleset_data.data` for an initial D&D 2024 character:
 
-**Purpose:** Stores character records associated with a campaign.
+```json
+{
+  "abilities": {"str": 12, "dex": 16, "con": 14, "int": 10, "wis": 13, "cha": 8},
+  "class_levels": [{"class_key": "ranger", "level": 5}],
+  "armor_class": 16,
+  "speed_ft": 30,
+  "proficiency_bonus": 3
+}
+```
 
-| Field | Type | Description |
-|---|---|---|
-| CharacterID | String | Unique identifier for the character |
-| CampaignID | String | Foreign key linking the character to a campaign |
-| CharacterName | String | Character name |
-| PlayerName | String | Name of the player controlling the character |
-| HP | Number | Current hit points |
-| MaxHP | Number | Maximum hit points |
-| ArmorClass | Number | Character armor class |
-| Notes | Text | Freeform notes about the character |
+This is an **illustrative application record**, not a definitive D&D 2024 schema or licensed rules content. HP and other frequently changing resources should have validated durable state rather than relying only on full JSON document replacements. Implement D&D rule validation in a versioned ruleset module.
 
-### Relationships
-- Many characters belong to one campaign
+**Proposed module contract** (logical, not yet coded):
 
-### Prototype Notes
-For the prototype, this table may include both player characters and other tracked actors if that simplifies development.
+```ts
+interface RulesetModule {
+  key: string; // e.g. "dnd5e-2024"
+  validateCharacter(input: unknown): ValidationResult;
+  getCharacterSummary(data: unknown): CharacterSummary;
+  getInitiativeModifier(data: unknown): number | null;
+  validateResourceChange(input: unknown): ValidationResult;
+}
+```
 
----
+Keep the shared app responsible for persistence, authorization, events, and presentation. The module determines mechanics and field semantics.
 
-## Sessions
+## 4. Follow-on entities
 
-**Purpose:** Stores session-level records tied to a campaign.
+| Entity | Intended phase |
+|---|---|
+| `private_messages` with sender/recipient and restrictive RLS | Whisper network |
+| `chronicle_jobs` and `chronicle_drafts` | AI session recaps with DM review |
+| `lore_entries`, `npcs`, `quests`, `locations` | Richer campaign management |
+| `inventory_items`, `character_inventory` | Inventory and equipment |
+| `ruleset_content` (licensed/reference-only) | Future authorized compendium support |
 
-| Field | Type | Description |
-|---|---|---|
-| SessionID | String | Unique identifier for the session |
-| CampaignID | String | Foreign key linking the session to a campaign |
-| SessionDate | Date/String | Date of the play session |
-| SessionNotes | Text | Raw notes captured during or after the session |
-| Summary | Text | Condensed recap of the session |
+## 5. Example relationships
 
-### Relationships
-- Many sessions belong to one campaign
+```mermaid
+ erDiagram
+  RULESETS ||--o{ RULESET_VERSIONS : has
+  RULESET_VERSIONS ||--o{ CAMPAIGNS : selected_by
+  CAMPAIGNS ||--o{ CAMPAIGN_MEMBERSHIPS : includes
+  CAMPAIGNS ||--o{ CHARACTERS : contains
+  CHARACTERS ||--o| CHARACTER_RULESET_DATA : extends
+  CAMPAIGNS ||--o{ SESSIONS : schedules
+  SESSIONS ||--o{ ENCOUNTERS : includes
+  ENCOUNTERS ||--o{ ENCOUNTER_PARTICIPANTS : includes
+  SESSIONS ||--o{ SESSION_EVENTS : records
+  CAMPAIGNS ||--o{ MAPS : owns
+  MAPS ||--o{ MAP_TOKENS : positions
+```
 
-### Prototype Notes
-In the early prototype, `Summary` may be manually written. In future phases it may also store AI-assisted outputs.
+## 6. Transaction and access invariants
 
----
+- A character's owner must be an authorized campaign member (or nullable for DM-controlled NPCs), checked in trusted operations.
+- Session events must reference the same campaign context as their session and actors.
+- A campaign's selected ruleset version determines its character-data validator; version changes require an explicit migration plan.
+- Combat state changes and corresponding event insertion must succeed or fail atomically.
+- Use unique `operation_id` to make repeated mutation requests safe against retries.
+- Private messages, hidden tokens, DM notes, and event payloads must never leak through permissive SELECT policies or realtime broadcasts.
 
-## 3. Prototype Relationship Model
-
-### Campaign → Characters
-One-to-many
-
-A single campaign contains multiple characters.
-
-### Campaign → Sessions
-One-to-many
-
-A single campaign contains multiple sessions.
-
-### Character ↔ Sessions
-Not directly linked in Prototype V1.
-
-For simplicity, character activity is inferred through notes rather than a dedicated join table.
-
----
-
-## 4. Future-State Tables
-
-These entities are not required for the first MIT App Inventor build, but they represent likely expansion points.
-
-## Communications
-
-**Purpose:** Stores private or targeted messages, notifications, or whisper-style communication.
-
-Possible fields:
-- CommunicationID
-- CampaignID
-- SessionID
-- SenderActorID
-- RecipientActorID
-- MessageBody
-- MessageType
-- Timestamp
-
----
-
-## BattlemapActors
-
-**Purpose:** Stores positional and tactical state for characters, NPCs, enemies, or tokens shown on a battlemap.
-
-Possible fields:
-- ActorID
-- CampaignID
-- SessionID
-- LinkedCharacterID
-- ActorType
-- PosX
-- PosY
-- HP
-- StatusEffects
-- VisibilityState
-
----
-
-## AIChroniclePipeline
-
-**Purpose:** Stores processing records for AI-assisted summarization and campaign history generation.
-
-Possible fields:
-- ChronicleID
-- CampaignID
-- SessionID
-- SourceType
-- RawInput
-- ContextReferences
-- GeneratedSummary
-- ReviewStatus
-- CreatedAt
-
----
-
-## 5. Future Normalization Opportunities
-
-As the project matures, the schema may split into more specialized entities such as:
-- NPCs
-- inventory items
-- world locations
-- quests
-- encounters
-- conditions/status effects
-- users/auth identities
-- session event logs
-
-This should only happen after the core workflow is validated.
-
----
-
-## 6. Design Principles
-
-This schema is being developed around a few practical principles:
-- keep prototype entities simple
-- prefer clear relationships over premature complexity
-- separate campaign history from live tactical state
-- allow future migration from local storage to cloud-backed structured tables
-
----
-
-## 7. Summary
-
-Prototype V1 uses a deliberately small schema built around campaigns, characters, and sessions.
-
-That structure is enough to validate the app’s core workflow now, while leaving room for future expansion into communications, battlemap state, and AI-assisted chronicle features.
+**Implementation next step:** translate this model into migrations, indexes, RLS policies, and integration tests. Do not consider this Markdown document a deployed database.

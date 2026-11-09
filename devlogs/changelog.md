@@ -20,3 +20,17 @@ All entries below represent the progress of the private development build. For i
 * Optimizing the Interactive Map layer for mobile screen real estate without sacrificing clarity.
 
 ---
+
+---
+
+## [Architecture Direction Update] - 2026-11-09
+
+### Decision
+- Selected a **web-first** prototype rather than MIT App Inventor, FlutterFlow, or a Godot-based game client.
+- Preferred stack: **Next.js / React / TypeScript + Supabase PostgreSQL/Auth/Realtime/Storage**; **React Konva** for an eventual interactive map.
+- Prioritized synchronized DM/player interfaces, authoritative combat state, browser access, and role-based data security.
+- Selected **D&D Fifth Edition (2024 revision)** as the initial supported ruleset; designed the application core to support versioned ruleset modules later.
+- Replaced the rebuild-oriented roadmap with incremental delivery of a single web application.
+
+### Current status
+Architecture and prototype documentation have been revised. **No new web application, backend schema migration, or live sync functionality is claimed as implemented.** Prior FlutterFlow/Firebase notes above remain as historical research and prototypes, not the active recommendation.

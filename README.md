@@ -1,134 +1,93 @@
 ![The Master's Loom Banner](loom-banner.png)
 
 # The Master's Loom
-**An experimental TTRPG campaign management system, evolving toward a real-time AI-augmented platform.**
 
-<div class="lore-card">
-  <h3>What Is The Master's Loom?</h3>
-  <p>
-    The Master's Loom is not just an application — it is an evolving system designed to support storytelling, worldbuilding, and real-time campaign orchestration for tabletop RPGs.
-  </p>
-  <p>
-    This project serves as both a functional prototype and a structured learning journey into modern application design.
-  </p>
-</div>
+**A web-first, real-time tabletop roleplaying campaign and live-session platform.** Initial ruleset: **Dungeons & Dragons Fifth Edition (2024 revision)**. The underlying platform is intended to accommodate other tabletop systems through versioned ruleset modules.
 
-## 🌌 The Vision
-The Master's Loom is a "Single Source of Truth" platform designed to bridge the gap between high-fantasy storytelling and real-time data management. By eliminating paper silos and manual tracking, the system allows Dungeon Masters and Players to maintain narrative immersion while the "Game State" is synchronized in the background.
+> **Status — architecture and prototype planning (November 2026).** The web-first direction and proposed technology stack have been selected for the next prototype. This public repository documents design decisions and requirements; it does **not** yet contain a deployed web application or working real-time multiplayer implementation.
 
-## 🎯 Project Purpose 
+## What is The Master's Loom?
 
-This project is primarily a hands-on learning initiative designed to build practical experience in:
+The Master's Loom is a campaign workspace and shared tabletop environment for Dungeon Masters (DMs) and players. It combines campaign organization, role-aware views, a synchronized combat monitor, an interactive battlemap, and a durable session history into one browser-accessible application.
 
-- Application architecture and system design
-- Frontend and backend integration
-- Data modeling and schema design
-- Iterative development across multiple technology stacks
+The design goal is a single authoritative campaign record with the right information surfaced to each participant during play, whether they are on a desktop, tablet, or phone.
 
-The goal is not just to build a functional application, but to develop a deep understanding of how scalable, modern applications are designed and implemented.
+## Product direction
 
-## Current Development Path
+- **Web-first:** responsive browser experience rather than a native-first or game-engine-dependent application.
+- **Live tabletop:** synchronized character/encounter state, initiative, maps, tokens, and presence are foundational capabilities, not optional late-stage extras.
+- **Role-aware:** DM-only notes and controls remain separate from player-accessible information; permissions are enforced on the server/database, not simply by hiding UI.
+- **System-flexible:** campaign, accounts, session history, communications, and map infrastructure stay independent of any one ruleset. D&D 2024 is the first implementation.
+- **Deliberate automation:** the DM retains control over adjudication; AI-assisted session chronicles remain a later, reviewable enhancement.
 
-The Master's Loom is currently being prototyped in **MIT App Inventor** as a learning-first build. The project follows a multi-phase development strategy, separating learning from production implementation.
+## Proposed technology stack
 
-**Current Phase (Phase 1 – Prototype & Validation)**
-- Built using MIT App Inventor
-- Focused on learning UI structure and navigation
-- Testing core workflows (campaigns, characters, sessions)
-- Using local storage (TinyDB or equivalent)
-- Rapid iteration without concern for scalability
+| Layer | Preferred technology | Purpose |
+|---|---|---|
+| Application | Next.js, React, TypeScript | Pages, reusable UI, server-side application functions |
+| UI | Tailwind CSS + shadcn/ui | Responsive dashboards and accessible controls |
+| Campaign data | Supabase PostgreSQL | Relational campaign, character, session, and event records |
+| Identity/authorization | Supabase Auth + PostgreSQL RLS | Accounts and campaign-scoped access controls |
+| Real-time | Supabase Realtime | Live notifications, presence, and session updates |
+| Shared battlemap | React Konva | 2D map image, grid, token interaction, overlays |
+| Assets | Supabase Storage | Uploaded maps and other permitted campaign assets |
+| AI (later) | Server-side provider integration | Chronicle drafting from DM-approved source material |
+| Deployment (to validate) | Vercel or equivalent Node.js hosting | Browser delivery |
 
-### Why this shift?
-The original target stack was **FlutterFlow + Firebase**, later expanded to consider **Supabase**. However, because this project is currently self-funded and learning-driven, the immediate goal is to:
-- learn core app concepts
-- prototype the data model and user flows
-- validate the campaign-management experience
-- defer platform-specific scaling decisions until later
+These are **architecture decisions for development**, not claims that the services have been implemented or deployed. Alternatives and rationale are recorded in [Technical Evaluations](evaluations/tech-evaluations.md).
 
-### Planned Build Phases
-1. **Phase 1 – MIT App Inventor Prototype (Learning & Validation)**
-   - Core screens
-   - Local/simple cloud data
-   - Campaign, character, session, and notes workflows
-   - Learning app fundamentals by building
+## First working prototype: definition of done
 
-2. **Phase 2 – Platform Rebuild (Structured Development)**
-   - Rebuild validated workflows in FlutterFlow
-   - Evaluate **Supabase** or **Firebase** for backend services
-   - Add cleaner auth, data structure, and UX
+A DM can create a campaign, invite a player, assign a character, start a session, adjust HP and initiative, and see those changes reflected on another connected device. Both clients can reconnect and recover the persisted authoritative state. DM-private data remains inaccessible to players. A simple shared map with movable tokens is the next milestone.
 
-3. **Phase 3 – Expansion (Advanced Features)**
-   - Real-time sync
-   - AI-generated summaries
-   - Whisper system
-   - Shared battlemap/state management
+**Initial scope**
+1. Sign-in, campaign creation, membership, roles, and persistent data.
+2. D&D 2024 character fundamentals: name, ability scores, class/level, HP, AC, and limited resource tracking.
+3. Active session, combat monitor, initiative, conditions, and a player-focused HUD.
+4. A basic shared battlemap with uploaded image, grid, tokens, and persisted token positions.
+5. An append-only session event history with reconnect and permission tests.
 
-## 🧪 Current Prototype Features (MIT App Inventor)
+**Deferred:** full D&D rules automation, cross-system rule engines, sophisticated fog of war, built-in voice/video, automated map generation, transcription, and AI Chronicle publication. See the [Roadmap](roadmap.md) for the delivery sequence.
 
-- Basic campaign creation
-- Character tracking
-- Session notes
-- Local data storage (TinyDB or equivalent)
-- Simple navigation between screens
+## Capability goals
 
-## ⚠️ Current Limitations
+| Capability | Design objective |
+|---|---|
+| DM Command Center | See campaign context, participants, encounter state, and controls in one place |
+| Player HUD | Display authorized character resources, combat state, and notifications |
+| Combat Monitor | Server-validated HP, conditions, initiative, and turn transitions |
+| Interactive Battlemap | Shared maps and tokens with durable final positions and ephemeral movement updates |
+| Whisper Network | Authorized private messaging and notifications (planned after core live session) |
+| Chronicle Engine | AI-assisted recaps built from captured events and approved materials, reviewed by the DM (later) |
+| Multiple rulesets | Versioned ruleset contracts; D&D 2024 implemented first |
 
-- Prototype built in MIT App Inventor (not production-ready)
-- No real-time sync
-- No persistent backend yet
-- Limited UI flexibility
-- Will require rebuild in future phases
+## Architecture principles
 
-## Planned Features
+- Separate **authoritative persistent state** (HP, turns, messages, final token coordinates) from **ephemeral live events** (drag previews, cursor activity, presence).
+- Validate all sensitive operations using trusted backend code and/or PostgreSQL policies; never trust a client-declared DM role.
+- Organize features around campaign membership and ruleset versions. Keep the shared application core independent of D&D-specific mechanics.
+- Record significant game-state transitions as events for history, conflict resolution, and eventual Chronicle inputs.
+- Measure real-time performance in actual test conditions instead of assuming a universal latency threshold.
+- Prefer a modular monolith and straightforward infrastructure until requirements justify additional services.
 
-- Campaign management
-- Character tracking
-- Session notes
-- World-building elements
-- Inventory and item tracking
+## Development status and history
 
-## ⚔️ Target Capabilities (Long-Term Vision)
-* **Live Session HUD:** A bi-directional dashboard where player updates (HP, AC, Spell Slots) reflect instantly on the DM’s "Combat Monitor".
-* **Chronicle Engine:** A multimodal logging system that uses AI to synthesize live session transcripts into automated narrative recaps. 
-* **Interactive Battlemap:** A shared digital canvas featuring "Smart Figurines" that track position and status across all connected devices in real-time.
-* **The Whisper Network:** A secure, real-time messaging layer for private plot-point communication without breaking table immersion.
+Earlier exploration included FlutterFlow/Firebase and MIT App Inventor. Those experiments remain part of the learning log but are **superseded as the forward development path**. The next implementation is a web-based prototype; no production build is represented here.
 
-## 🛠️ Future Architectural Goals
-1. **Low Latency:** Low-latency synchronization for critical combat statistics.
-2. **Platform Agnostic:** A single-codebase approach ensuring a seamless experience across Web, iOS, and Android.
-3. **AI-Native Logic:** Integrated pipelines for narrative assistance, world-building, and session summarization.
-4. **Cloud-Based Backend:** Supabase or Firebase for database storage, user management, and secure authentication. 
+## Documentation
 
-## 📌 Project Philosophy
-
-This project is intentionally iterative and exploratory.
-
-Rather than aiming for immediate production readiness, The Master's Loom is designed as a structured learning journey—building, testing, refining, and rebuilding with better tools and deeper understanding at each stage.
-
-## 📖 Status
-
-🚧 Early Prototype — Actively in development and experimentation phase
-
-## 📂 Project Documentation
-
-- [Roadmap](roadmap.md)
+- [Development Roadmap](roadmap.md)
 - [System Architecture](architecture/system-architecture.md)
-- [Data Schema](data/data-schema.md)
+- [Schema and Ruleset Boundaries](data/data-schema.md)
 - [User Journey](user-journey.md)
-- [Tech Evaluations](evaluations/tech-evaluations.md)
-- [Prototype Docs](prototype/README.md)
-- [Dev Logs](devlogs/changelog.md)
+- [Technical Evaluations and Decision Record](evaluations/tech-evaluations.md)
+- [Prototype Scope and Acceptance Tests](prototype/README.md)
+- [Known Limitations](prototype/known-limitations.md)
+- [Development Log](devlogs/changelog.md)
 - [Learning Log](learninglog/)
 
-## ⚖️ Intellectual Property & Proprietary Rights
-**Copyright © 2026 Ashley Windsor. All Rights Reserved.**
+## Intellectual property and scope
 
-"The Master's Loom," its associated brand identity, system architecture, data schemas, and user experience frameworks are the exclusive intellectual property of the author. 
+**Copyright © 2026 Ashley Windsor. All rights reserved.** This repository is a public design journal and architectural portfolio. No software license is granted for the author's original project material unless a license is explicitly added. Third-party tools and dependencies retain their own licenses.
 
-**Public Disclosure Notice:**
-This repository serves as a public design journal and architectural portfolio. The presence of this documentation in a public forum does **not** constitute a license for:
-* Reproduction or distribution of these architectural frameworks.
-* The commercial or private development of software based on these specific schemas.
-* The use of "The Master's Loom" branding or trade dress.
-
-For inquiries regarding collaboration or professional discussion, please contact the author via LinkedIn.
+**D&D content:** The project is not affiliated with or endorsed by Wizards of the Coast. Any official rules text, imagery, trademarks, and game data must be used under applicable licenses/permissions. Initial implementation can track user-entered stats without redistributing proprietary rulebooks or comprehensive content catalogs.

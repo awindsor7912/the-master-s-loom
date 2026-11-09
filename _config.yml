@@ -1,5 +1,5 @@
 title: "The Master's Loom"
-description: "A dark-fantasy design journal for an evolving TTRPG campaign management system."
+description: "A web-first real-time TTRPG campaign and tabletop platform, initially focused on D&D 2024."
 baseurl: "/the-master-s-loom"
 url: "https://awindsor7912.github.io"
 
@@ -28,6 +28,8 @@ navigation:
     url: /data/data-schema
   - title: Prototype
     url: /prototype/README
+  - title: Tech Decisions
+    url: /evaluations/tech-evaluations
 
 branding:
   accent: "#c9a96a"

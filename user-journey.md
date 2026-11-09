@@ -1,60 +1,54 @@
 ---
 title: User Journey: A Night at The Master's Loom
-description: Intended user experience for The Master's Loom.
----
-<div class="lore-card">
-  <h3>Player Experience Focus</h3>
-  <p>
-    The system is designed to reduce friction during gameplay by surfacing the right information at the right time.
-  </p>
-  <p>
-    Every interaction should feel intuitive, fast, and supportive of storytelling rather than disruptive to it.
-  </p>
-</div>
-
-This document outlines the end-to-end experience for both the Dungeon Master (DM) and the Players, highlighting how the platform facilitates seamless gameplay and narrative transition.
-
+description: Proposed D&D-first, web-based DM and player experience.
 ---
 
-## Phase 1: The Gathering (Pre-Session)
-**Goal:** Prepare the digital environment for the night's adventure.
+# User Journey — A Live D&D Session
 
-* **The DM's Action:** Opens the Campaign Dashboard and selects "Prepare Next Session."
-* **The Loom’s Assistance:**
-    * Prompts the DM to upload notes or a PDF from the previous session.
-    * AI scans the notes and suggests 3-5 possible "Combat Encounters" or "NPC Interactions" based on the current location.
-    * DM selects a "Forest Clearing" encounter; The Loom generates a tactical map with a glowing leyline in the center.
-* **The Player's Action:** Logs into the mobile app to review their "Chronicle" (the AI-generated summary of the last game).
+> **Illustrative workflow, not a claim of implemented behavior.** The first playable experience targets D&D Fifth Edition (2024 revision); later rulesets should use the same campaign/session infrastructure with their own mechanics modules.
 
----
+## 1. Before the game: set up the campaign
 
-## Phase 2: "Roll for Initiative" (Live Gameplay)
-**Goal:** Maintain immersion by eliminating manual data tracking.
+**DM:** Signs into the browser application, creates a campaign using the `dnd5e-2024` ruleset version, invites players, and creates an upcoming session. DM can view campaign notes and characters.
 
-* **The Trigger:** A combat encounter begins. The DM clicks the "Launch Session" button.
-* **The Synchronization:**
-    * **DM View:** A "Combat Monitor" appears, showing all Player HP, AC, and passive perception in a single list.
-    * **Player View:** The "Player HUD" switches to "Combat Mode." The AI-generated map appears on their screen.
-* **The Action:** A Player takes 15 points of damage from a goblin. They swipe a slider on their phone.
-* **The Result:** The DM’s monitor flashes red next to that player's name and updates the HP instantly. No words are exchanged; the DM simply narrates, *"The blow lands heavy, you're looking a bit ragged."*
+**Player:** Opens the invitation in a desktop or mobile browser, joins the campaign, and creates or claims a character. Their dashboard shows permitted campaign information and their character's D&D resources. Other campaigns and DM-only details remain inaccessible.
 
----
+**V1 implementation:** authentication, membership, campaign, characters, and persisted sessions. Automated encounter suggestions are deferred.
 
-## Phase 3: The "Whisper" (Roleplay Depth)
-**Goal:** Facilitate secret information without breaking the table's "Meta."
+## 2. Starting play: shared state
 
-* **The DM's Action:** Notices a player has a high enough 'Insight' to realize an NPC is lying.
-* **The Interaction:** The DM types a quick "Whisper" on their dashboard: *"You notice his hand trembling when he mentions the King."*
-* **The Player Experience:** A subtle notification appears only on that player's HUD. They choose how to act on it without the rest of the table knowing why.
+**DM:** Launches the session and opens the Combat Monitor, where authorized character and encounter information is displayed.
 
----
+**Player:** Opens their Player HUD on a phone or second browser window. A presence indicator shows connected participants, and the player sees only permitted information.
 
-## Phase 4: The Chronicle (Post-Session)
-**Goal:** Preserving the story for the future.
+**Live example:** DM applies 15 points of damage to a participating character. A trusted server operation validates the user's role, updates persistent HP, and appends a structured event. Other connected clients receive an update and reconcile against authoritative state. If the player's browser disconnects, the current HP is recovered after reconnection.
 
-* **The DM's Action:** Clicks "Close Session" and saves the audio/text log.
-* **The Loom’s Synthesis:**
-    * The **Chronicle Engine** parses the transcript.
-    * It identifies key milestones: *The party defeated the goblin scout, discovered the map to the Sunken Temple, and Kaelen was nearly knocked unconscious.*
-    * An automated narrative summary is generated and pinned to the Campaign Wall.
-* **The Final State:** Character sheets are automatically updated with new XP and inventory changes, ready for the next time the Loom is spun.
+**V1 implementation:** HP/initiative transactions, shared live updates, session event history, and reconnect recovery. Full rules adjudication remains the DM's responsibility.
+
+## 3. Shared battlemap
+
+**DM:** Uploads a map image, configures a basic grid, and places tokens for the active encounter.
+
+**Player:** Views the authorized map and tokens. During a permitted movement, the canvas can show ephemeral movement updates; the final token position is validated and saved. Hidden or DM-only tokens must not be sent to unauthorized clients.
+
+**V1 implementation:** basic map, grid, token movement, and final coordinate persistence. Advanced fog of war is later work.
+
+## 4. Private communication (later milestone)
+
+**DM:** Sends a private whisper containing a story clue to one player.
+
+**Player:** Receives the private message without it becoming visible to the rest of the party. Backend authorization must protect the message contents and notification channel, not merely hide them in UI.
+
+## 5. After the session: history and chronicle (later milestone)
+
+**DM:** Closes the session. The saved timeline and notes provide a structured record of what happened.
+
+**Chronicle Engine (later):** Produces a draft recap from authorized session events and DM-approved notes or transcripts. The DM reviews and edits the draft before it appears in the campaign's published history. AI-created content is distinct from source records.
+
+## Guiding UX principles
+
+- Make the phone HUD immediately legible during live play.
+- Avoid requiring a desktop browser for basic player actions.
+- Minimize context switching between combat, map, and communications.
+- Make synchronization and pending/failed changes obvious.
+- Preserve DM discretion rather than forcing full automation of D&D mechanics.

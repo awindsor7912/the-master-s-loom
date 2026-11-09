@@ -1,3 +1,8 @@
+---
+title: "Development Changelog"
+description: "Project milestones, decisions, and superseded experiments."
+---
+
 # 🛠️ Development Log: The Master's Loom
 
 All entries below represent the progress of the private development build. For intellectual property reasons, the source code and raw design assets remain in a private repository.

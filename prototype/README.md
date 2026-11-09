@@ -1,3 +1,8 @@
+---
+title: "Prototype Scope"
+description: "Initial web prototype scope and acceptance criteria."
+---
+
 # Web Prototype — Scope & Acceptance Criteria
 
 > **Status:** planned, not yet implemented in this repository. The MIT App Inventor prototype was an earlier learning direction and is no longer the active target.

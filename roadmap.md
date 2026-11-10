@@ -8,7 +8,8 @@ description: Web-first development plan for The Master's Loom.
 > **Planning status — November 2026.** Checkboxes represent intended work, not completed implementation. Older MIT App Inventor and FlutterFlow milestones are retained in the [development log](devlogs/changelog.md), not the active roadmap.
 
 ## Phase 0 — Project setup and contracts
-
+- [x] Establish initial application shell and Dashboard, Campaigns, Characters, and Sessions placeholder routes
+- [x] Verify local route navigation, production build, and GitHub push
 - [ ] Define D&D 2024 V1 acceptance criteria and non-goals
 - [ ] Initialize Next.js / React / TypeScript app in a development branch or separate private app repository
 - [ ] Establish design tokens, accessible responsive shell, DM and player navigation

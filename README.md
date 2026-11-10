@@ -4,7 +4,7 @@
 
 **A web-first, real-time tabletop roleplaying campaign and live-session platform.** Initial ruleset: **Dungeons & Dragons Fifth Edition (2024 revision)**. The underlying platform is intended to accommodate other tabletop systems through versioned ruleset modules.
 
-> **Status — architecture and prototype planning (November 2026).** The web-first direction and proposed technology stack have been selected for the next prototype. This public repository documents design decisions and requirements; it does **not** yet contain a deployed web application or working real-time multiplayer implementation.
+> **Status — Active Development (November 2026).** The initial Next.js frontend foundation has been implemented, including Dashboard, Campaigns, Characters, and Sessions routes with shared workspace navigation. The application has passed its initial production build and has been published to GitHub. Backend persistence, authentication, real-time multiplayer functionality, and interactive battlemap capabilities remain planned development milestones.
 
 ## What is The Master's Loom?
 
@@ -20,21 +20,58 @@ The design goal is a single authoritative campaign record with the right informa
 - **System-flexible:** campaign, accounts, session history, communications, and map infrastructure stay independent of any one ruleset. D&D 2024 is the first implementation.
 - **Deliberate automation:** the DM retains control over adjudication; AI-assisted session chronicles remain a later, reviewable enhancement.
 
-## Proposed technology stack
 
-| Layer | Preferred technology | Purpose |
-|---|---|---|
-| Application | Next.js, React, TypeScript | Pages, reusable UI, server-side application functions |
-| UI | Tailwind CSS + shadcn/ui | Responsive dashboards and accessible controls |
-| Campaign data | Supabase PostgreSQL | Relational campaign, character, session, and event records |
-| Identity/authorization | Supabase Auth + PostgreSQL RLS | Accounts and campaign-scoped access controls |
-| Real-time | Supabase Realtime | Live notifications, presence, and session updates |
-| Shared battlemap | React Konva | 2D map image, grid, token interaction, overlays |
-| Assets | Supabase Storage | Uploaded maps and other permitted campaign assets |
-| AI (later) | Server-side provider integration | Chronicle drafting from DM-approved source material |
-| Deployment (to validate) | Vercel or equivalent Node.js hosting | Browser delivery |
+## Technology Stack & Implementation Status
 
-These are **architecture decisions for development**, not claims that the services have been implemented or deployed. Alternatives and rationale are recorded in [Technical Evaluations](evaluations/tech-evaluations.md).
+The Master's Loom uses a web-first architecture, with Dungeons & Dragons Fifth Edition (2024 revision) as its initial ruleset. The frontend foundation is implemented in a separate application repository, while backend services and advanced tabletop features remain planned.
+
+| Layer | Technology | Implementation Status | Purpose |
+|---|---|---|---|
+| Application | Next.js 16, React 19, TypeScript | Implemented | Application routing, page rendering, reusable components, and future server-side functionality |
+| UI & Styling | Tailwind CSS 4 | Initial implementation | Responsive styling, dashboard layouts, and workspace navigation |
+| Component Library | shadcn/ui | Planned | Accessible and reusable interface components |
+| Campaign Data | Supabase PostgreSQL | Planned | Persistent campaign, character, session, and event records |
+| Identity & Authorization | Supabase Auth + PostgreSQL RLS | Planned | User authentication, role management, and campaign-scoped permissions |
+| Real-Time Communication | Supabase Realtime | Planned | Synchronized sessions, presence, and live updates |
+| Shared Battlemap | React Konva | Planned | Interactive maps, grids, tokens, and overlays |
+| Asset Storage | Supabase Storage | Planned | Campaign assets, uploaded maps, and authorized file access |
+| AI Integration | Server-side provider integration | Future phase | AI-assisted Chronicle drafting using DM-approved session information |
+| Deployment | Vercel | Configured | Hosting and deployment of the Next.js application |
+| Version Control | Git + GitHub | Implemented | Source control, development history, and deployment integration |
+
+### Current Implementation
+
+**Completed — November 9, 2026**
+
+- Initialized the Next.js application with TypeScript and Tailwind CSS.
+- Established the App Router directory structure.
+- Implemented a shared application layout and navigation component.
+- Created Dashboard, Campaigns, Characters, and Sessions routes.
+- Verified local routing and page rendering.
+- Completed a successful production build.
+- Published the initial application to GitHub.
+- Configured Vercel deployment.
+
+**Next Development Priorities**
+
+1. Establish reusable UI components and consistent design tokens.
+2. Set up Supabase PostgreSQL and authentication.
+3. Implement persistent campaign records and campaign creation workflows.
+4. Introduce Dungeon Master and player role-based access controls.
+5. Develop character management using D&D 2024 fundamentals.
+6. Implement session state management and real-time synchronization.
+
+### Application Repository
+
+The application source code is maintained separately from this architectural documentation repository:
+
+[The Master's Loom — Next.js Application](https://github.com/awindsor7912/masters-loom-app)
+
+This repository serves as the project's architectural portfolio, development journal, roadmap, and technical decision record.
+
+**Implementation note:** Technologies marked as planned represent the selected architectural direction and are not yet functional integrations. The current application provides the initial frontend foundation; persistent campaign management, authentication, multiplayer synchronization, and interactive battlemap functionality remain under development.
+
+Additional technology evaluations and architectural rationale are documented in [Technical Evaluations](evaluations/tech-evaluations.md).
 
 ## First working prototype: definition of done
 

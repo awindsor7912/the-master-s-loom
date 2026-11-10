@@ -5,7 +5,7 @@ description: "Project milestones, decisions, and superseded experiments."
 
 # 🛠️ Development Log: The Master's Loom
 
-All entries below represent the progress of the private development build. For intellectual property reasons, the source code and raw design assets remain in a private repository.
+Entries preserve the project's historical experiments and current implementation milestones. The active Next.js frontend is housed in the separate public [masters-loom-app](https://github.com/awindsor7912/masters-loom-app) repository; features marked as planned remain unimplemented.
 
 ---
 
@@ -38,4 +38,6 @@ All entries below represent the progress of the private development build. For i
 - Replaced the rebuild-oriented roadmap with incremental delivery of a single web application.
 
 ### Current status
-Architecture and prototype documentation have been revised. **No new web application, backend schema migration, or live sync functionality is claimed as implemented.** Prior FlutterFlow/Firebase notes above remain as historical research and prototypes, not the active recommendation.
+The initial Next.js frontend shell has been implemented and pushed to <a href="https://github.com/awindsor7912/masters-loom-app">the application repository</a>. Dashboard, Campaigns, Characters, and Sessions routes are available as early workspace screens. Authentication, persisted campaign data, multiplayer synchronization, and maps are planned, not implemented.
+
+See [November 9, 2026 — Next.js Application Foundation](2026-11-09-nextjs-foundation.md).

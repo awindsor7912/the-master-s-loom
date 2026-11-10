@@ -8,7 +8,7 @@ description: The Master's Loom project overview, proposed architecture, developm
   <h1>A shared command center for tabletop campaigns.</h1>
   <p class="lead">The Master's Loom is a planned web-first platform for Dungeon Masters and players to organize campaigns, run synchronized sessions, and interact on a shared battlemap.</p>
   <p><strong>Starting point:</strong> Dungeons &amp; Dragons Fifth Edition (2024 revision). <strong>Long-term direction:</strong> support additional tabletop rulesets through versioned, modular integrations.</p>
-  <p class="status-note"><strong>Current status:</strong> Architecture and prototype planning. The selected stack and capabilities below are proposals, not implemented or deployed features.</p>
+  <p class="status-note"><strong>Current status:</strong> The initial Next.js frontend shell has been implemented and pushed to <a href="https://github.com/awindsor7912/masters-loom-app">the application repository</a>. Dashboard, Campaigns, Characters, and Sessions routes are available as early workspace screens. Authentication, persisted campaign data, multiplayer synchronization, and maps are planned, not implemented.</p>`
   <div class="action-row">
     <a class="action-link primary" href="{{ '/roadmap.html' | relative_url }}">View roadmap</a>
     <a class="action-link" href="{{ '/prototype/README.html' | relative_url }}">Prototype acceptance criteria</a>
@@ -57,6 +57,8 @@ description: The Master's Loom project overview, proposed architecture, developm
   <li><a href="{{ '/prototype/README.html' | relative_url }}">Prototype scope</a> — testable acceptance criteria</li>
   <li><a href="{{ '/evaluations/tech-evaluations.html' | relative_url }}">Technology evaluation</a> — platform tradeoffs and rationale</li>
   <li><a href="{{ '/devlogs/changelog.html' | relative_url }}">Development changelog</a> — project history and superseded approaches</li>
+  <li><a href="{{ '/devlogs/2026-11-09-nextjs-foundation.html' | relative_url }}">Next.js foundation milestone</a> — implementation and troubleshooting notes</li>
+  <li><a href="{{ '/learninglog/11-09-2026.html' | relative_url }}">Learning log: November 9</a> — Next.js routing, GitHub workflow, and VS Code troubleshooting</li>
 </ul>
 
 <p class="small-note">This site is an architectural portfolio and design journal. D&amp;D is a trademark of Wizards of the Coast; the project is not affiliated with or endorsed by Wizards of the Coast. Third-party game content is subject to its applicable license.</p>

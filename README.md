@@ -71,8 +71,10 @@ A DM can create a campaign, invite a player, assign a character, start a session
 - Prefer a modular monolith and straightforward infrastructure until requirements justify additional services.
 
 ## Development status and history
+**Status — frontend foundation implemented (November 9, 2026). ** A separate [Next.js application repository](https://github.com/awindsor7912/masters-loom-app) now contains an initial workspace shell and Dashboard, Campaigns, Characters, and Sessions routes. Local route testing and a production build succeeded. Backend services, persistent records, authentication, authorization, real-time synchronization, and a battlemap remain unimplemented.
 
-Earlier exploration included FlutterFlow/Firebase and MIT App Inventor. Those experiments remain part of the learning log but are **superseded as the forward development path**. The next implementation is a web-based prototype; no production build is represented here.
+**History
+- Exploratory Phase Retired, front-end development began (Nov 9, 2026) - Earlier exploration in March of 2026 included FlutterFlow/Firebase and MIT App Inventor. Those experiments remain part of the learning log but are **superseded as the forward development path**. The next implementation is a web-based prototype; no production build is represented here.
 
 ## Documentation
 
